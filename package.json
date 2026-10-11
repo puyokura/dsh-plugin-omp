@@ -1,0 +1,27 @@
+{
+  "name": "dsh-plugin-omp",
+  "version": "1.0.0",
+  "description": "Cordis plugin for DeepSeek Harness (dsh-TUI / dst) to bridge OMP sessions and suppress onboarding splash screen",
+  "type": "module",
+  "main": "index.mjs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/puyokura/dsh-plugin-omp.git"
+  },
+  "keywords": [
+    "cordis",
+    "cordis-plugin",
+    "dsh",
+    "dsh-tui",
+    "dst",
+    "deepseek-harness",
+    "omp"
+  ],
+  "author": "puyokura",
+  "license": "MIT",
+  "files": [
+    "index.mjs",
+    "README.md",
+    "LICENSE"
+  ]
+}
