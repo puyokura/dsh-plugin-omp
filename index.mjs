@@ -1,9 +1,8 @@
 /**
  * @module dsh-plugin-omp
  * Cordis plugin for dsh-TUI (dst) to:
- * 1. Suppress "Welcome to dsh-TUI" onboarding splash screen.
- * 2. Import and bridge OMP conversations into DSH session store.
- * 3. Browse and resume OMP sessions seamlessly from within dst.
+ * 1. Import and bridge OMP conversations into DSH session store.
+ * 2. Browse and resume OMP sessions seamlessly from within dst.
  */
 
 import fs from 'node:fs'
@@ -30,21 +29,6 @@ function getDshTuiDir() {
 /** Get omp sessions directory (~/.omp/agent/sessions) */
 function getOmpSessionsDir() {
   return path.join(getHomeDir(), '.omp', 'agent', 'sessions')
-}
-
-/** Suppress "Welcome to dsh-TUI" onboarding wizard */
-function suppressWelcome() {
-  try {
-    const tuiDir = getDshTuiDir()
-    if (!fs.existsSync(tuiDir)) {
-      fs.mkdirSync(tuiDir, { recursive: true })
-    }
-    const onboardingFile = path.join(tuiDir, 'onboarding.json')
-    const state = { completed: true, version: 1 }
-    fs.writeFileSync(onboardingFile, `${JSON.stringify(state, null, 2)}\n`, 'utf8')
-  } catch (err) {
-    // Non-fatal, suppress error
-  }
 }
 
 /** Locate dsh-tui CLI entry point */
@@ -265,13 +249,10 @@ function formatImportResult(res) {
 
 /** Cordis plugin entry point */
 export function apply(ctx) {
-  // 1. Immediately suppress "Welcome to dsh-TUI" onboarding screen
-  suppressWelcome()
-
-  // 2. Run background sync silently on startup
+  // 1. Run background sync silently on startup
   runOmpMigration(false).catch(() => {})
 
-  // 3. Register /omp slash command
+  // 2. Register /omp slash command
   ctx.effect(function* () {
     yield ctx.commands.register({
       definitionId: 'dsh-plugin-omp',
@@ -280,9 +261,6 @@ export function apply(ctx) {
       handler: async (invocation) => {
         const args = invocation.rawInput.trim().split(/\s+/).filter(Boolean)
         const sub = args[0]?.toLowerCase() || 'list'
-
-        // Keep onboarding suppressed whenever user interacts
-        suppressWelcome()
 
         let chatText = ''
 

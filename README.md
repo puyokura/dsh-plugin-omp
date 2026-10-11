@@ -1,6 +1,6 @@
 # dsh-plugin-omp
 
-DeepSeek Harness (dsh-TUI / dst) 向けの Cordis プラグインです。OMP (Oh My Posh) のセッション履歴を DSH に統合・移行し、起動時のオンボーディング画面（Welcome to dsh-TUI）を自動的に抑制します。
+DeepSeek Harness (dsh-TUI / dst) 向けの Cordis プラグインです。OMP (Oh My Posh) のセッション履歴を DSH に統合・移行し、シームレスに再開可能にします。
 
 ---
 
@@ -8,7 +8,6 @@ DeepSeek Harness (dsh-TUI / dst) 向けの Cordis プラグインです。OMP (O
 
 `dsh-plugin-omp` は、DeepSeek Harness の TUI クライアント（`dst` / `dsh-tui`）環境において、以下の機能を提供する拡張プラグインです。
 
-- **オンボーディング画面の抑制**: 起動時に表示される「Welcome to dsh-TUI」初期設定スプラッシュ画面を自動スキップし、即座に作業を開始可能にします。
 - **OMP 会話データの同期・インポート**: OMP セッションディレクトリ（`~/.omp/agent/sessions`）に保存されている会話履歴を走査し、DSH セッションストアへ移行します。
 - **セッション閲覧と再開**: `/omp` スラッシュコマンドを用いて、OMP 側の会話一覧や接続ステータスを確認し、インポート後は標準の `/resume` コマンドからシームレスに会話を再開できます。
 
@@ -16,17 +15,14 @@ DeepSeek Harness (dsh-TUI / dst) 向けの Cordis プラグインです。OMP (O
 
 ## 主な機能 (Features)
 
-1. **オンボーディング画面の自動抑制**
-   - プラグイン読み込み時およびコマンド実行時に `~/.dsh-tui/onboarding.json` の完了状態を維持し、初期ウィザードの表示をスキップします。
-
-2. **OMP 会話の自動・手動インポート (`/omp import`)**
+1. **OMP 会話の自動・手動インポート (`/omp import`)**
    - プラグイン起動時にバックグラウンドで OMP 会話の差分同期を自動実行します。
    - スラッシュコマンド `/omp import`（または `/omp sync`）により、オンデマンドで OMP の会話を DSH セッションストアへ取り込めます。
 
-3. **OMP セッションの一覧表示 (`/omp list`)**
+2. **OMP セッションの一覧表示 (`/omp list`)**
    - 直近の OMP セッション履歴（セッションID、タイトル、メッセージ件数、作業ディレクトリ、更新日時）を表形式で一覧表示します。
 
-4. **連携ステータスの確認 (`/omp status`)**
+3. **連携ステータスの確認 (`/omp status`)**
    - OMP セッション保存先パスの検出状態や、インポート対象の会話件数などを確認できます。
 
 ---
